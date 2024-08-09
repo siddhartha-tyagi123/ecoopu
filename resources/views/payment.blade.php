@@ -136,6 +136,7 @@ body {
         </div>
         <div class="planItem__container">
             @foreach($plans as $plan)
+          
             <div class="planItem planItem--free">
                 <div class="card">
                     <div class="card__header">
@@ -156,31 +157,31 @@ body {
                 <div class="featureList">
                     {!! $plan->description !!}
                 </div>
-                <!-- <button class="button" id="payment" data-id="{{ $plan->id }}" data-duration="{{ $plan->days }}">Get Started</button> -->
-                <a href="{{ route('plans.show', $plan->slug) }}" class="btn btn-primary pull-right">Choose</a>
+                 @if($plan->days <= 14)
+                <a href="{{ route('plans.show', $plan->slug) }}" class="btn btn-primary pull-right">Get Started</a>
+                 @elseif(auth()->user()->role == 2)
+                 <a href="{{ route('shop.owner.dashboard', $plan->slug) }}" class="btn btn-primary pull-right">Get Started</a>
+                 @else
+                 <a href="{{ route('customer.dashboard', $plan->slug) }}" class="btn btn-primary pull-right">Get Started</a>
+                 @endif
             </div>
+          
             @endforeach
         </div>
     </div>
 </section>
 <!-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.button');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            const duration = parseInt(this.getAttribute('data-duration'), 10);
-            const planId = this.getAttribute('data-id');
-            
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.button').forEach(button => {
+        button.addEventListener('click', () => {
+            var duration = parseInt(button.getAttribute('data-duration'), 10);
+            var planId = button.getAttribute('data-id');
             if (duration <= 14) {
-                // Redirect to the plan page
-                window.location.href = `/plan/${planId}`;
+                window.location.href = `/plans/${planId}`;
             } else if (duration <= 30) {
-                // Redirect to the dashboard
                 window.location.href = 'shop/owner/dashboard';
             } else {
-                // Handle other cases if necessary
-                console.error('Unexpected duration');
+                console.error('Unexpected duration value:', duration);
             }
         });
     });

@@ -26,12 +26,13 @@ class RegisterationController extends Controller
         $data = $request->all();
         $user = $this->createUser($data);
         event(new Registered($user));
-        if ($request->exists('isAdmin')) {
-            $user->markEmailAsVerified();
-            return redirect()->back()->with('success', 'User Created');
-        } else {
-            return redirect('email/verify')->with('success', 'Verification link sent');
-        }
+        return redirect()->route('plan.index')->with('success', 'User Created');
+        // if ($request->exists('isAdmin')) {
+        //     $user->markEmailAsVerified();
+        //     return redirect()->back()->with('success', 'User Created');
+        // } else {
+        //     return redirect('email/verify')->with('success', 'Verification link sent');
+        // }
     }
     public function shopOwnerRegisteration(Request $request)
     {

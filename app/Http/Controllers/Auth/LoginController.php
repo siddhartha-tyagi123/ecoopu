@@ -40,10 +40,20 @@ class LoginController extends Controller
             if (auth()->user()->role == 1) {
                 return redirect()->route('dashboard')->with('success', 'Logged in successfully');
             } elseif (auth()->user()->role == 3) {
-                return redirect('home')->with('success', 'Logged in successfully');
+                if (auth()->user()->plan_id) {
+                    return redirect()->route('customer.dashboard')->with('success', 'Logged in successfully');
+                } else {
+                    return redirect()->route('plan.index');
+                }
+                // return redirect()->route('plan.index')->with('success', 'Logged in successfully');
             } elseif(auth()->user()->role == 2) {
                 // dd('shop');
-                return redirect()->route('plan.index')->with('success', 'Logged in successfully');
+                if (auth()->user()->plan_id) {
+                    return redirect()->route('shop.owner.dashboard')->with('success', 'Logged in successfully');
+                } else {
+                    return redirect()->route('plan.index');
+                }
+                // return redirect()->route('plan.index')->with('success', 'Logged in successfully');
             }
         } else {
             return redirect('login')->withSuccess('Invalid Credentials');

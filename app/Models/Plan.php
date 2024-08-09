@@ -24,4 +24,9 @@ class Plan extends Model
     {
         return 'slug';
     }
+
+    public function orderlist()
+    {
+        return $this->belongsTo(OrderList::class);
+    }
 }

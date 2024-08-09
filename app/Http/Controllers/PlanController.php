@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plan;
+use App\Models\User;
 
 class PlanController extends Controller
 {
@@ -35,7 +36,7 @@ class PlanController extends Controller
     {
         // dd($request->all());
         
-        $stripe = new \Stripe\StripeClient('sk_test_51PBuwNSHwu1CvbLUwixYwuzUBjL9SPyWv0uGpsluXVGCeN5z3TqlSknvuhUoDES2UGaH2T5bjvWZn8cwLcXTztEv00iJN8WSho');
+        $stripe = new \Stripe\StripeClient('sk_test_51Pla0WAt9K91cNqZzfFpkUVgBOqwTnOJoob6DIB7RJ9AqYNuxhH4jEz7ucglHPmFNcbJJ3piX1tBuVp8tTarbAl500nSUYiYvU');
         
         // Create a customer
         $customer = $stripe->customers->create([
@@ -64,6 +65,10 @@ class PlanController extends Controller
         
         // Retrieve plan
         $plan = Plan::find($request->plan);
+        $user = User::find(auth()->user()->id);
+        $user->plan_id = $plan->id;
+        $user->plan_status = "active";
+        $user->save();
         
         // Create subscription
         $response = $stripe->subscriptions->create([

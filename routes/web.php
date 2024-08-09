@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ShopOwnerController;
+use App\Http\Controllers\CustomerController;
 
 
 // Route::get('/', function () {
@@ -71,4 +72,9 @@ Route::post('subscription', [PlanController::class, 'subscription'])->name("subs
 // });
 //Shop owner
 Route::get('shop/owner/dashboard', [ShopOwnerController::class, 'index'])->name('shop.owner.dashboard');
+//Customer
+Route::get('customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
+Route::get('customer/orderlist', [CustomerController::class, 'orderList'])->name('orderlist');
+
+
 
