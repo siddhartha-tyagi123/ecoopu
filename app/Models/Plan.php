@@ -25,8 +25,9 @@ class Plan extends Model
         return 'slug';
     }
 
-    public function orderlist()
+    public function orderlists() 
     {
-        return $this->belongsTo(OrderList::class);
+      return $this->belongsTo(OrderList::class);
     }
+
 }

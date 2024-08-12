@@ -16,6 +16,8 @@ class OrderList extends Model
 
     public function plan()
     {
-        return $this->hasMany(Plan::class);
+      return $this->hasMany(Plan::class, 'orderlist', 'id');
     }
+
+    
 }

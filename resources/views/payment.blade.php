@@ -136,7 +136,7 @@ body {
         </div>
         <div class="planItem__container">
             @foreach($plans as $plan)
-          
+          @if(auth()->user()->role == 2 || $plan->role == NULL)
             <div class="planItem planItem--free">
                 <div class="card">
                     <div class="card__header">
@@ -165,7 +165,7 @@ body {
                  <a href="{{ route('customer.dashboard', $plan->slug) }}" class="btn btn-primary pull-right">Get Started</a>
                  @endif
             </div>
-          
+          @endif
             @endforeach
         </div>
     </div>

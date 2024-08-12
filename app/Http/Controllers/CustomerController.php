@@ -17,17 +17,14 @@ class CustomerController extends Controller
     public function orderList()
     {
          $orderList = OrderList::all();
-         $planOrderList = Plan::with('orderlist')->get(); 
-
-    foreach ($planOrderList as $planOrder) {
-
-        $orderListCount = $planOrder->orderlist->count();
-        dd($orderListCount); 
+         $orderCount = $orderList->count();
+         $planOrderList = Plan::with('orderlists')->get();
+       
+        return view('customer.order_list',compact('orderList','planOrderList','orderCount'));
     }
-        
-         
-        return view('customer.order_list',compact('orderList'));
-    }
+
+  
+
  
 
 

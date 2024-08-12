@@ -40,13 +40,24 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($planOrderList as $orderList)
                 @php
-                $counter = 1; 
+                // If orderlist is a comma-separated string
+                $orderArray = explode(',', $orderList->orderlist);
+                @endphp
+                @if($orderCount >= count($orderArray))
+                @php
+                $counter = 1;
                 @endphp
 
-                @foreach($orderList as $order)
+                @foreach($orderArray as $orderId)
+                @php
+                $order = \App\Models\OrderList::find($orderId);
+                @endphp
+
+                @if($order)
                 <tr>
-                    <td>{{ $counter++ }}</td> 
+                    <td>{{ $counter++ }}</td>
                     <td>{{ $order->title }}</td>
                     <td>{{ $order->size }}</td>
                     <td>
@@ -54,11 +65,28 @@
                         <a href="#" class="btn btn-warning btn-sm">Edit</a>
                     </td>
                 </tr>
+                @endif
+                @endforeach
+                @endif
                 @endforeach
             </tbody>
+          
+
+
+
+
         </table>
     </div>
-    
+    <!-- @foreach($planOrderList as $orderList)
+    @if($orderCount >= $orderList->orderlist)
+        <p>test</p>
+    @else
+        <p>false</p>
+    @endif
+@endforeach -->
+
+
+
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
