@@ -9,5 +9,5 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['country', 'flag'];
+    protected $fillable = ['country', 'flag', 'code', 'lang'];
 }

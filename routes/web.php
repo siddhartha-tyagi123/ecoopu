@@ -76,5 +76,8 @@ Route::get('shop/owner/dashboard', [ShopOwnerController::class, 'index'])->name(
 Route::get('customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
 Route::get('customer/orderlist', [CustomerController::class, 'orderList'])->name('orderlist');
 
+// language translations
+Route::get('lang/change', [UserController::class, 'change'])->name('changeLang');
+
 
 

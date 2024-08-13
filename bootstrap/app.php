@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->web(append: [
+            \App\Http\Middleware\LanguageManager::class,
+        ]);
         $middleware->alias([
             'isAdmin' => \App\Http\Middleware\IsAdmin::class,
             'isUser' => \App\Http\Middleware\IsUser::class,

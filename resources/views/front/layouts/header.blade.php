@@ -1,35 +1,88 @@
 <header>
-  <!-- <style>
-    .currencyList {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Adjust as needed for spacing */
-} -->
+    <style>
+    .custom-dropdown {
+        position: relative;
+        width: 200px;
+        /* Adjust as needed */
+    }
 
-  </style>
+    .custom-dropdown-selected {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    .selected-flag {
+        width: 20px;
+        /* Adjust size as needed */
+        height: auto;
+        margin-right: 8px;
+    }
+
+    .custom-dropdown-options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        border: 1px solid #ccc;
+        background-color: white;
+        z-index: 1;
+    }
+
+    .custom-dropdown-option {
+        padding: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    .custom-dropdown-option:hover {
+        background-color: #f0f0f0;
+    }
+
+    .custom-dropdown-option .option-flag {
+        width: 20px;
+        /* Adjust size as needed */
+        height: auto;
+        margin-right: 8px;
+    }
+    </style>
     <div class="topBar">
         <div class="wrapper">
             <div class="topBarInner">
-                <div class="currencyChange">Currency:
+                <div class="currencyChange">{{ GoogleTranslate::trans('Currency:', app()->getLocale()) }}
                     <label>
                         <input type="checkbox" />
-                        <span>EURO</span></label>
+                        <span>{{ GoogleTranslate::trans('EURO', app()->getLocale()) }}</span>
+                    </label>
                     <label>
                         <input type="checkbox" />
-                        <span>DKK</span></label>
+                        <span>{{ GoogleTranslate::trans('DKK', app()->getLocale()) }}</span>
+                    </label>
                 </div>
-                <!-- <p>{{ __('message.Average discount (Not required for now)') }}</p> -->
-                <p>Average discount (Not required for now)</p>
-                <section> Country:
-                    <div class="currencyList"><span><img src="{{ asset('public/front/images/flag.png') }}" alt="Country"/></span>
-              <ul>
-                <li><img src="{{ asset('public/front/images/flag1.png') }}" alt="Country"/></li>
-                <li><img src="{{ asset('public/front/images/flag2.png') }}" alt="Country"/></li>
-                <li><img src="{{ asset('public/front/images/flag3.png') }}" alt="Country"/></li>
-              </ul>
-            </div>
-
-
+                <p>{{ GoogleTranslate::trans('Average discount (Not required for now)', app()->getLocale()) }}</p>
+                <section> {{ GoogleTranslate::trans('Country:', app()->getLocale()) }}
+                    <div class="currencyList">
+                        <div class="custom-dropdown">
+                            <div class="custom-dropdown-selected">
+                                <img src="{{ asset('public/front/images/flag.png') }}" alt="Country Flag"
+                                    class="selected-flag">
+                                <span class="selected-text">{{ session()->get('selected_country', 'United States') }}</span>
+                            </div>
+                            <div class="custom-dropdown-options">
+                                @foreach($countries as $country)
+                                <div class="custom-dropdown-option" data-value="{{ $country->code }}"
+                                    data-flag="{{ asset('public/front/images/' . $country->flag) }}">
+                                    <img src="{{ asset('public/front/images/' . $country->flag) }}" alt="{{ $country->lang }}" class="option-flag">
+                                    {{ $country->lang }}
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
@@ -45,12 +98,18 @@
     @endif
     <div class="logoNav">
         <div class="wrapper">
-            <div class="logoNavInner"> <a href="{{ route('home') }}" class="logo"><img
-                        src="{{ asset('public/front/images/logo.png') }}" alt="logo" /></a>
+            <div class="logoNavInner">
+                <a href="{{ route('home') }}" class="logo">
+                    <img src="{{ asset('public/front/images/logo.png') }}" alt="logo" />
+                </a>
                 <nav>
-                    <a href="{{ route('login') }}" class="login">Login</a> <a href="{{ route('register') }}">Sign Up</a>
-                    <a href="">Wishlist</a> <a href="">€0.00</a> <a href="" class="cart"><img
-                            src="{{ asset('public/front/images/cart.png') }}" alt="cart" /><span>3</span></a>
+                    <a href="{{ route('login') }}" class="login">{{ GoogleTranslate::trans('Login', app()->getLocale()) }}</a>
+                    <a href="{{ route('register') }}">{{ GoogleTranslate::trans('Sign Up', app()->getLocale()) }}</a>
+                    <a href="">{{ GoogleTranslate::trans('Wishlist', app()->getLocale()) }}</a>
+                    <a href="">{{ GoogleTranslate::trans('€0.00', app()->getLocale()) }}</a>
+                    <a href="" class="cart">
+                        <img src="{{ asset('public/front/images/cart.png') }}" alt="cart" /><span>3</span>
+                    </a>
                 </nav>
             </div>
         </div>
@@ -59,52 +118,40 @@
         <div class="wrapper">
             <div class="productsCategoriesInner">
                 <div class="allLeftCategories">
-                    <div class="categorySet"> <span><img src="{{ asset('public/front/images/categoryMenu.png') }}"
-                                alt="menu" /><b>All Products</b>
-                            <label>New</label>
+                    <div class="categorySet">
+                        <span>
+                            <img src="{{ asset('public/front/images/categoryMenu.png') }}" alt="menu" />
+                            <b>{{ GoogleTranslate::trans('All Products', app()->getLocale()) }}</b>
+                            <label>{{ GoogleTranslate::trans('New', app()->getLocale()) }}</label>
                         </span>
                         <ul>
-                            <li><a href="">Jeans</a></li>
-                            <li><a href="">Tops</a></li>
-                            <li><a href="">Shirts</a></li>
-                            <li><a href="">Shoes</a></li>
-                            <li><a href="">Caps</a></li>
-                            <li><a href="">Eye Glasses</a></li>
-                            <li><a href="">Helmets</a></li>
-                            <li><a href="">Cycles</a></li>
-                            <li><a href="">Tools</a></li>
-                            <li><a href="">Machines</a></li>
-                            <li><a href="">Toys</a></li>
-                            <li><a href="">Wheels</a></li>
-                            <li><a href="">Tyres</a></li>
-                            <li><a href="">Landscape Items</a></li>
-                            <li><a href="">Computers</a></li>
-                            <li><a href="">Phones</a></li>
-                            <li><a href="">Television</a></li>
-                            <li><a href="">Audio</a></li>
-                            <li><a href="">Bluetooth Devices</a></li>
-                            <li><a href="">Mirrors</a></li>
-                            <li><a href="">Wood Items</a></li>
-                            <li><a href="">Polishing</a></li>
-                            <li><a href="">Books</a></li>
-                            <li><a href="">Cards</a></li>
+                            <!-- List items -->
+                            @foreach(['Jeans', 'Tops', 'Shirts', 'Shoes', 'Caps', 'Eye Glasses', 'Helmets', 'Cycles', 'Tools', 'Machines', 'Toys', 'Wheels', 'Tyres', 'Landscape Items', 'Computers', 'Phones', 'Television', 'Audio', 'Bluetooth Devices', 'Mirrors', 'Wood Items', 'Polishing', 'Books', 'Cards'] as $item)
+                            <li><a href="">{{ $item }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
-                    <div class="miniNav"> <a href="">Today's best deal</a> <a href="">Latest viewed</a> <a
-                            href="">Shops</a> <a href="">Order list</a> </div>
+                    <div class="miniNav">
+                        <a href="">Today's best deal</a>
+                        <a href="">Latest viewed</a>
+                        <a href="">Shops</a>
+                        <a href="">Order list</a>
+                    </div>
                 </div>
                 @if(Route::has('login'))
                 @auth
-                <div class="profile"><span>Welcome <b>{{ session()->get('email') }}</b></span>
+                <div class="profile">
+                    <span>Welcome <b>{{ session()->get('email') }}</b></span>
                     <ul>
                         <li><a href="{{ route('logout') }}">Logout</a></li>
                         <li><a href="{{ route('verification.notice') }}">Verify Email</a></li>
                     </ul>
                 </div>
                 @else
-                <div class="profile"><span></b></span>
+                <div class="profile">
+                    <span></span>
                     <ul>
-                        <li><a href="">Login</a></li>
+                        <li><a href="{{ route('login') }}">Login</a></li>
                     </ul>
                 </div>
                 @endauth
@@ -113,41 +160,48 @@
         </div>
     </div>
 </header>
-<!-- <script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    const countryDropdown = document.getElementById('countryDropdown');
-    const currentFlag = document.getElementById('currentFlag');
 
-    countryDropdown.addEventListener('change', (event) => {
-        const selectedOption = event.target.options[event.target.selectedIndex];
-        const flagUrl = selectedOption.getAttribute('data-flag');
-        currentFlag.src = flagUrl;
-    });
-});
-</script> -->
-
-
-
-<!-- <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const countryDropdown = document.getElementById('countryDropdown');
-    const currentFlag = document.getElementById('currentFlag');
-    const languageForm = document.getElementById('languageForm');
-
-    // Function to set the flag image based on the selected option
-    function updateFlagImage() {
-        const selectedOption = countryDropdown.options[countryDropdown.selectedIndex];
-        const flagUrl = selectedOption.getAttribute('data-flag');
-        currentFlag.src = flagUrl;
+<!-- Google Translate Widget -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en', // Default language
+            includedLanguages: 'en,es,fr,de,it', // Languages you want to include
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
     }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    // Set initial flag image based on the currently selected language
-    updateFlagImage();
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropdown = document.querySelector('.custom-dropdown');
+        const selected = dropdown.querySelector('.custom-dropdown-selected');
+        const options = dropdown.querySelector('.custom-dropdown-options');
 
-    countryDropdown.addEventListener('change', () => {
-        updateFlagImage();
-        // Submit the form to change the language
-        languageForm.submit();
+        selected.addEventListener('click', () => {
+            options.style.display = options.style.display === 'block' ? 'none' : 'block';
+        });
+
+        options.querySelectorAll('.custom-dropdown-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.getAttribute('data-value');
+                const flagUrl = option.getAttribute('data-flag');
+                const text = option.textContent;
+
+                selected.querySelector('.selected-flag').src = flagUrl;
+                selected.querySelector('.selected-text').textContent = text;
+                options.style.display = 'none';
+
+                // Redirect to change language
+                window.location.href = "{{ route('changeLang') }}?lang=" + lang;
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!dropdown.contains(event.target)) {
+                options.style.display = 'none';
+            }
+        });
     });
-});
-</script> -->
+</script>
