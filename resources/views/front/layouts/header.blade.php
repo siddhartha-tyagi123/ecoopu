@@ -73,6 +73,7 @@
                                 <span class="selected-text">{{ session()->get('selected_country', 'United States') }}</span>
                             </div>
                             <div class="custom-dropdown-options">
+                            @if(isset($countries) && $countries->isNotEmpty())
                                 @foreach($countries as $country)
                                 <div class="custom-dropdown-option" data-value="{{ $country->code }}"
                                     data-flag="{{ asset('public/front/images/' . $country->flag) }}">
@@ -80,6 +81,7 @@
                                     {{ $country->lang }}
                                 </div>
                                 @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -31,6 +31,23 @@ Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard')->m
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('add-user', [AdminController::class, 'showAddUserForm'])->name('admin.adduser');
+Route::get('customer/list',[AdminController::class, 'customerList'])->name('customer.list');
+Route::get('edit/customer/{id}',[AdminController::class, 'editCustomer'])->name('edit.customer');
+Route::post('update/customer/{id}',[AdminController::class, 'updateCustomer'])->name('update.customer');
+Route::delete('delete/customer/{id}', [AdminController::class, 'destroyCustomer'])->name('destroy.customer');
+
+Route::get('manager/list',[AdminController::class, 'managerList'])->name('manager.list');
+Route::get('edit/manager/{id}',[AdminController::class, 'editManager'])->name('edit.manager');
+Route::post('update/manager/{id}',[AdminController::class, 'updateManager'])->name('update.manager');
+Route::delete('delete/manager/{id}', [AdminController::class, 'destroyManager'])->name('destroy.manager');
+
+Route::get('shop/owner/list',[AdminController::class, 'shopOwnerList'])->name('shop.owner.list');
+Route::get('edit/shop/owner/{id}',[AdminController::class, 'editShopOwner'])->name('edit.shop.owner');
+Route::post('update/shop/owner/{id}',[AdminController::class, 'updateShopOwner'])->name('update.shop.owner');
+Route::delete('delete/shop/owner/{id}', [AdminController::class, 'destroyShopOwner'])->name('destroy.shop.owner');
+
+
+
 // admin routes end
 // front routes
 Route::get('/', [UserController::class, 'index']);
@@ -78,6 +95,7 @@ Route::get('customer/orderlist', [CustomerController::class, 'orderList'])->name
 
 // language translations
 Route::get('lang/change', [UserController::class, 'change'])->name('changeLang');
+
 
 
 
