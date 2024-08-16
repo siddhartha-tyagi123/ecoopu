@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('customer.layouts.app')
 
 @section('content')
 <div class="content-wrapper">
@@ -27,7 +27,6 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <button id="toggleButton" class="btn btn-primary mb-3">Show Top 4 Orders</button>
 
                             <table class="table table-striped order-list-table">
                                 <thead>

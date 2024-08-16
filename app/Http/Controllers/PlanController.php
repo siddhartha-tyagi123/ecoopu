@@ -48,35 +48,33 @@ class PlanController extends Controller
                 'state' => 'Up',
                 'country' => 'India',
             ],
-            'payment_method' => $request->token, // Attach payment method to the customer
+            'payment_method' => $request->token, 
             'invoice_settings' => [
-                'default_payment_method' => $request->token // Set default payment method
+                'default_payment_method' => $request->token 
             ]
         ]);
         
-        // Attach the payment method to the customer
         $stripe->paymentMethods->attach(
             $request->token,
             ['customer' => $customer->id]
         );
         
-        // Retrieve customer ID
         $customerId = $customer->id;
         
-        // Retrieve plan
         $plan = Plan::find($request->plan);
         $user = User::find(auth()->user()->id);
         $user->plan_id = $plan->id;
         $user->plan_status = "active";
         $user->save();
         
-        // Create subscription
         $response = $stripe->subscriptions->create([
             'customer' => $customerId,
             'items' => [['price' => $plan->stripe_plan]],
         ]);
+        $response->save();
+
+        
      
-        // Subscription success view
         return view("subscription_success");
     }
 }
